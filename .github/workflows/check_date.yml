@@ -9,6 +9,7 @@ jobs:
     outputs:
       is_valid: ${{ steps.check_date_allowed.outputs.is_valid }}
     steps:
+      - uses: actions/checkout@v3
       - name: Check if date is allowed
         id: check_date_allowed
         uses: ./.github/actions/check_allowed_date
