@@ -15,7 +15,8 @@ inputs:
     type: string
     default: '["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]'
 outputs:
-  is_valid: ${{ steps.check_date_allowed.outputs.is_valid }}
+  is_valid:
+    value: ${{ steps.check_date_allowed.outputs.is_valid }}
 runs:
   using: "composite"
   steps:
