@@ -1,7 +1,7 @@
 name: Check date
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       initial_hour_allowed:
         description: 'Initial hour allowed to deploy'
