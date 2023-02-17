@@ -44,6 +44,7 @@ jobs:
           echo "is_valid=true" >> "$GITHUB_OUTPUT"
   foo:
     needs: check_date_allowed
+    if: ${{ needs.check_date_allowed.outputs.is_valid == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Foo
