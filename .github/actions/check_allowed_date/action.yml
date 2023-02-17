@@ -22,6 +22,7 @@ runs:
   steps:
     - name: Check if date is allowed
       id: check_date_allowed
+      shell: bash
       run: |
         # Check if the current day of the week is a valid day
         day=$(date +%A | tr '[:upper:]' '[:lower:]')
