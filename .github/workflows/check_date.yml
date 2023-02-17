@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Check if date is allowed
         id: check_date_allowed
-        uses: actions/check_allowed_date@main
+        uses: ./.github/actions/check_allowed_date
         with:
           initial_hour_allowed: '00:00'
           final_hour_allowed: '23:59'
