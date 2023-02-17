@@ -1,0 +1,44 @@
+name: Check date
+
+on:
+  workflow_call:
+    inputs:
+      initial_hour_allowed:
+        description: 'Initial hour allowed to deploy'
+        required: false
+        type: string
+      final_hour_allowed:
+        description: 'Final hour allowed to deploy'
+        required: false
+        type: string
+      days_allowed:
+        description: 'Days of the week allowed'
+        required: false
+        type: string
+        default: '["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]'
+jobs:
+  check_date_allowed:
+    runs-on: ubuntu-latest
+    outputs:
+      is_valid: ${{ steps.check_date_allowed.outputs.is_valid }}
+    steps:
+      - name: Check if date is allowed
+        id: check_date_allowed
+        run: |
+          # Check if the current day of the week is a valid day
+          day=$(date +%A | tr '[:upper:]' '[:lower:]')
+          if [[ ${{ inputs.days_allowed }} != *\"$day\"* ]]; then
+            echo "is_valid=false" >> "$GITHUB_OUTPUT"
+            echo 'Date of the week is not allowed. Allowed days: ${{ inputs.days_allowed }}' >> $GITHUB_STEP_SUMMARY
+            exit 0;
+          fi
+
+          # Check if the current time is between the initial and final hours allowed
+          current_time=$(date +%H:%M)
+          if [[ "$current_time" > "$initial_hour_allowed" && "$current_time" < "$final_hour_allowed" ]]; then
+            echo "is_valid=false" >> "$GITHUB_OUTPUT"
+            echo 'Date is not within time frame ${{ inputs.initial_hour_allowed }} - ${{ inputs.final_hour_allowed }}' >> $GITHUB_STEP_SUMMARY
+            exit 0;
+          fi
+
+          echo "is_valid=true" >> "$GITHUB_OUTPUT"
