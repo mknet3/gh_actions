@@ -27,7 +27,9 @@ jobs:
         run: |
           # Check if the current day of the week is a valid day
           day=$(date +%A | tr '[:upper:]' '[:lower:]')
+          echo $day
           days_allowed=$(echo "${{ inputs.days_allowed }}" | tr '[:upper:]' '[:lower:]')
+          echo $days_allowed
           if [[ $days_allowed != *\"$day\"* ]]; then
             echo "is_valid=false" >> "$GITHUB_OUTPUT"
             echo 'Date of the week is not allowed. Allowed days: ${{ inputs.days_allowed }}' >> $GITHUB_STEP_SUMMARY
