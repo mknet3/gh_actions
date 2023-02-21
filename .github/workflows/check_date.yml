@@ -7,23 +7,23 @@ jobs:
   check_date_allowed:
     runs-on: ubuntu-latest
     outputs:
-      is_valid: ${{ steps.check_date_allowed.outputs.is_valid }}
+      is_deployment_allowed: ${{ steps.check_date_allowed.outputs.is_within_range }}
     steps:
       - uses: actions/checkout@v3
       - name: Check if date is allowed
         id: check_date_allowed
         uses: ./.github/actions/check_allowed_date
         with:
-          initial_hour_allowed: '00:00'
-          final_hour_allowed: '23:59'
-          days_allowed: '["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]'
+          initial_hour: '00:00'
+          final_hour: '23:59'
+          days: '["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]'
             
   foo:
     needs: check_date_allowed
-    if: ${{ needs.check_date_allowed.outputs.is_valid == 'true' }}
+    if: ${{ needs.check_date_allowed.outputs.is_deployment_allowed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Foo
         id: foo
         run: |
-          echo ${{ needs.check_date_allowed.outputs.is_valid }}
+          echo ${{ needs.check_date_allowed.outputs.is_deployment_allowed }}
