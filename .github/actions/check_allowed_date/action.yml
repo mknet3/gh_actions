@@ -26,11 +26,11 @@ runs:
       run: |
         # Check if the current day of the week is within the range
         day=$(date +%A | tr '[:upper:]' '[:lower:]')
-        days_allowed=$(echo '${{ inputs.days_allowed }}' | tr '[:upper:]' '[:lower:]')
-        echo $days_allowed
-        if [[ $days_allowed != *\"$day\"* ]]; then
+        days=$(echo '${{ inputs.days }}' | tr '[:upper:]' '[:lower:]')
+        echo $days
+        if [[ $days != *\"$day\"* ]]; then
           echo "is_within_range=false" >> "$GITHUB_OUTPUT"
-          echo '⚠️ Date of the week is not within the range. Allowed days: ${{ inputs.days_allowed }}'
+          echo '⚠️ Date of the week is not within the range. Allowed days: ${{ inputs.days }}'
           exit 0;
         fi
         # Check if the current time is within the hours specified
