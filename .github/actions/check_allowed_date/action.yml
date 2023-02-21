@@ -1,45 +1,43 @@
-name: 'Check allowed date'
-description: 'Check if a date is allowed given the rules defined'
+name: 'Check date within range'
+description: 'Check if a date is within a time range'
 inputs:
-  initial_hour_allowed:
-    description: 'Initial hour allowed to deploy'
+  initial_hour:
+    description: 'Initial hour'
     required: false
     type: string
-  final_hour_allowed:
-    description: 'Final hour allowed to deploy'
+  final_hour:
+    description: 'Final hour'
     required: false
     type: string
-  days_allowed:
+  days:
     description: 'Days of the week allowed'
     required: false
     type: string
     default: '["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]'
 outputs:
-  is_valid:
-    value: ${{ steps.check_date_allowed.outputs.is_valid }}
+  is_within_range:
+    value: ${{ steps.check_date_allowed.outputs.is_within_range }}
 runs:
   using: "composite"
   steps:
-    - name: Check if date is allowed
+    - name: Check if date is within range
       id: check_date_allowed
       shell: bash
       run: |
-        # Check if the current day of the week is a valid day
+        # Check if the current day of the week is within the range
         day=$(date +%A | tr '[:upper:]' '[:lower:]')
         days_allowed=$(echo '${{ inputs.days_allowed }}' | tr '[:upper:]' '[:lower:]')
         echo $days_allowed
         if [[ $days_allowed != *\"$day\"* ]]; then
-          echo "is_valid=false" >> "$GITHUB_OUTPUT"
-          echo '⚠️ Date of the week is not allowed. Allowed days: ${{ inputs.days_allowed }}' >> $GITHUB_STEP_SUMMARY
+          echo "is_within_range=false" >> "$GITHUB_OUTPUT"
+          echo '⚠️ Date of the week is not within the range. Allowed days: ${{ inputs.days_allowed }}'
           exit 0;
         fi
-
-        # Check if the current time is between the initial and final hours allowed
+        # Check if the current time is within the hours specified
         current_time=$(date +%H:%M)
-        if [[ $current_time < "${{ inputs.initial_hour_allowed }}" || $current_time > "${{ inputs.final_hour_allowed }}" ]]; then
-          echo "is_valid=false" >> "$GITHUB_OUTPUT"
-          echo '⚠️ Date is not within time frame ${{ inputs.initial_hour_allowed }} - ${{ inputs.final_hour_allowed }}' >> $GITHUB_STEP_SUMMARY
+        if [[ $current_time < "${{ inputs.initial_hour }}" || $current_time > "${{ inputs.final_hour }}" ]]; then
+          echo "is_within_range=false" >> "$GITHUB_OUTPUT"
+          echo '⚠️ Date is not within the range ${{ inputs.initial_hour }} - ${{ inputs.final_hour }}'
           exit 0;
         fi
-
-        echo "is_valid=true" >> "$GITHUB_OUTPUT"
+        echo "is_within_range=true" >> "$GITHUB_OUTPUT"
