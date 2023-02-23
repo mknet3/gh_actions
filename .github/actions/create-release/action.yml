@@ -19,4 +19,4 @@ runs:
           -t "${{ github.sha }}" \
           $release_name
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
