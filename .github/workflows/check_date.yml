@@ -22,6 +22,8 @@ jobs:
     needs: check_date_allowed
     if: ${{ needs.check_date_allowed.outputs.is_deployment_allowed == 'true' }}
     runs-on: ubuntu-latest
+    permissions:
+      statuses: write
     steps:
       - name: Foo
         id: foo
