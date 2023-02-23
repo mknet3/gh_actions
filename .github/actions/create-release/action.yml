@@ -1,0 +1,17 @@
+name: 'Create release'
+description: 'Create release'
+runs:
+  using: "composite"
+  steps:
+    - name: Create release
+      id: create_release
+      run: |
+        sha_short=$(git rev-parse --short HEAD)
+        release_name="ArgoCD-$(date +%Y%m%d%H%M%S)"
+        hub release create -m $release_name \
+          -m "Hey 👋! This is a Release 🚀!
+          release-version: '$release_name'" \
+          -t "${{ github.sha }}" \
+          $release_name
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
