@@ -50,3 +50,7 @@ jobs:
             -f context='Error'
         env:
           GH_TOKEN: ${{ github.token }}
+
+      - name: Create release
+        id: create release
+        uses: ./.github/actions/create-release
