@@ -4,7 +4,7 @@ runs:
   using: "composite"
   steps:
     - name: Create release
-      id: create_release
+      id: release
       run: |
         sha_short=$(git rev-parse --short HEAD)
         release_name="ArgoCD-$(date +%Y%m%d%H%M%S)"
