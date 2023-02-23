@@ -10,13 +10,13 @@ jobs:
       is_deployment_allowed: ${{ steps.check_date_allowed.outputs.is_within_range }}
     steps:
       - uses: actions/checkout@v3
-      - name: Check if date is allowed
-        id: check_date_allowed
-        uses: ./.github/actions/check_allowed_date
-        with:
-          initial_hour: '00:00'
-          final_hour: '23:59'
-          days: '["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]'
+#      - name: Check if date is allowed
+#        id: check_date_allowed
+#        uses: ./.github/actions/check_allowed_date
+#        with:
+#          initial_hour: '00:00'
+#          final_hour: '23:59'
+#          days: '["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]'
             
   foo:
     needs: check_date_allowed
@@ -25,12 +25,30 @@ jobs:
     permissions:
       statuses: write
     steps:
-      - name: Foo
-        id: foo
+      - name: Success
+        id: success
         run: |
           gh api repos/${{ github.repository }}/statuses/${{ github.sha }} \
             -f state=success \
-            -f description='New release' \
-            -f context='Release'
+            -f description='Success description' \
+            -f context='Success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Failure
+        id: failure
+        run: |
+          gh api repos/${{ github.repository }}/statuses/${{ github.sha }} \
+            -f state=failure \
+            -f description='Failure description' \
+            -f context='Failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Error
+        id: error
+        run: |
+          gh api repos/${{ github.repository }}/statuses/${{ github.sha }} \
+            -f state=error \
+            -f description='Error description' \
+            -f context='Error'
         env:
           GH_TOKEN: ${{ github.token }}
