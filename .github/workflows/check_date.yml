@@ -56,3 +56,5 @@ jobs:
 
       - name: Create release
         uses: ./.github/actions/create-release
+        with:
+          github_token: ${{ github.token }}
