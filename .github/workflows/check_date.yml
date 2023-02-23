@@ -19,7 +19,6 @@ jobs:
 #          days: '["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]'
             
   foo:
-    if: ${{ needs.check_date_allowed.outputs.is_deployment_allowed == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       statuses: write
