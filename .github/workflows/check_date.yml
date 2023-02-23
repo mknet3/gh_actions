@@ -26,7 +26,7 @@ jobs:
       - name: Foo
         id: foo
         run: |
-          gh api repos/${{ github.owner }}/${{ github.repository }}/statuses/${{ github.sha }} \
+          gh api repos/${{ github.repository }}/statuses/${{ github.sha }} \
             -f state=success \
             -f description='New release' \
             -f context='Release'
