@@ -1,5 +1,9 @@
 name: 'Create release'
 description: 'Create release'
+inputs:
+  github_token:
+    description: 'Github Token'
+    required: true
 runs:
   using: "composite"
   steps:
