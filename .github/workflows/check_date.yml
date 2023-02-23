@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  check_date_allowed:
-    runs-on: ubuntu-latest
-    outputs:
-      is_deployment_allowed: ${{ steps.check_date_allowed.outputs.is_within_range }}
-    steps:
-      - uses: actions/checkout@v3
+# check_date_allowed:
+#   runs-on: ubuntu-latest
+#   outputs:
+#     is_deployment_allowed: ${{ steps.check_date_allowed.outputs.is_within_range }}
+#   steps:
+#     - uses: actions/checkout@v3
 #      - name: Check if date is allowed
 #        id: check_date_allowed
 #        uses: ./.github/actions/check_allowed_date
@@ -19,7 +19,6 @@ jobs:
 #          days: '["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]'
             
   foo:
-    needs: check_date_allowed
     if: ${{ needs.check_date_allowed.outputs.is_deployment_allowed == 'true' }}
     runs-on: ubuntu-latest
     permissions:
