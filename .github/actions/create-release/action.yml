@@ -9,6 +9,7 @@ runs:
   steps:
     - name: Create release
       id: release
+      shell: bash
       run: |
         sha_short=$(git rev-parse --short HEAD)
         release_name="ArgoCD-$(date +%Y%m%d%H%M%S)"
