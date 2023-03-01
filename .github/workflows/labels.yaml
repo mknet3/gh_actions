@@ -10,5 +10,10 @@ jobs:
 
     steps:
       - name: Post to a Slack channel
-        run: echo ${{ join(',', github.event.pull_request.labels.*.name) }}
+        run: |
+          for ELEMENT in ${${{ github.event.pull_request.labels.*.name }}}
+          do
+          echo File: $ELEMENT.
+          done
+          echo ${{ github.event.pull_request.labels.*.name }}
 
