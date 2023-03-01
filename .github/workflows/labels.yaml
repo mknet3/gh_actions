@@ -1,0 +1,13 @@
+name: Test labels
+
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Post to a Slack channel
+        run: echo ${{ github.event.pull_request.labels.*.name }}
