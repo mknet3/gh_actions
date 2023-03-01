@@ -1,8 +1,8 @@
 name: Test labels
 
 on:
-  pull_request:
-    types: [labeled]
+  issue_comment:
+    types: [created, deleted]
 
 jobs:
   build:
@@ -11,9 +11,5 @@ jobs:
     steps:
       - name: Post to a Slack channel
         run: |
-          for ELEMENT in ${${{ github.event.pull_request.labels.*.name }}}
-          do
-          echo File: $ELEMENT.
-          done
-          echo ${{ github.event.pull_request.labels.*.name }}
+          echo ${{ github.event.issue.pull_request.comment }}
 
