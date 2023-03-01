@@ -11,3 +11,4 @@ jobs:
     steps:
       - name: Post to a Slack channel
         run: echo ${{ github.event.pull_request.labels.*.name }}
+
