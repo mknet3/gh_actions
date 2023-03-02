@@ -13,13 +13,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3.3.0
-      - run: echo ${{ github.event.release.tag_name }}
-      - run: |
-          v1=$(echo '${{ github.event.release.tag_name }}' | cut -d '.' -f1)
-          v1_0=$(echo '${{ github.event.release.tag_name }}' | cut -d '.' -f1-2)
-          echo $v1
-          echo $v1_0
-      - name: Publish tag
+      - name: Create or update tag
         uses: actions/github-script@v5
         with:
           script: |
@@ -33,8 +27,7 @@ jobs:
                 ref: 'tags/' + major,
                 sha: context.sha,
               })
-            } catch (error) {
-              console.log(error);
+            } catch {
               await github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -42,8 +35,19 @@ jobs:
                 sha: context.sha,
               })
             }
-      - name: Dump github context
-        run:   echo "$GITHUB_CONTEXT"
-        shell: bash
-        env:
-         GITHUB_CONTEXT: ${{ toJson(github) }}
+
+            try {
+              await github.rest.git.updateRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'tags/' + minor,
+                sha: context.sha,
+              })
+            } catch {
+              await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/' + minor,
+                sha: context.sha,
+              })
+            }
