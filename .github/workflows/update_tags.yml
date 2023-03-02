@@ -23,14 +23,13 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            major=$(echo '${{ github.event.release.tag_name }}' | cut -d '.' -f1)
-            minor=$(echo '${{ github.event.release.tag_name }}' | cut -d '.' -f1-2)
-            echo $major
-            echo $minor
+            const version = "${{ github.event.release.tag_name }}";
+            const major = version.split(".")[0];
+            const minor = version.split(".").slice(0, 2).join(".");
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/$major',
+              ref: 'refs/tags/' + major,
               sha: context.sha
             })
       - name: Dump github context
