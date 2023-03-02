@@ -71,3 +71,12 @@ jobs:
         uses: ./.github/actions/create-release
         with:
           github_token: ${{ github.token }}
+  foo2:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      statuses: write
+    steps:
+      - name: show env variables
+        run: |
+          echo ${{ env.SCHEDULE_INITIAL_HOUR }}
