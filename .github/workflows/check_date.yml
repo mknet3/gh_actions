@@ -1,4 +1,4 @@
-name: Check date
+name: Create release
 
 on:
   workflow_dispatch:
@@ -6,79 +6,13 @@ on:
     types: [published]
 
 jobs:
-# check_date_allowed:
-#   runs-on: ubuntu-latest
-#   outputs:
-#     is_deployment_allowed: ${{ steps.check_date_allowed.outputs.is_within_range }}
-#   steps:
-#     - uses: actions/checkout@v3
-#      - name: Check if date is allowed
-#        id: check_date_allowed
-#        uses: ./.github/actions/check_allowed_date
-#        with:
-#          initial_hour: '00:00'
-#          final_hour: '23:59'
-#          days: '["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]'
-            
-  foo:
+  create_release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
       statuses: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3.3.0
-      - name: ls
-        run: ls -lR
-      - name: load yaml
-        run: |
-          YAML_FILE="cicd.yml"
-          while IFS=': ' read -r key value; do
-              echo "$(echo "$key" | tr '[:lower:]' '[:upper:]')=$value" >> $GITHUB_ENV
-          done < "$YAML_FILE"
-      - name: show env variables
-        run: |
-          echo ${{ env.SCHEDULE_INITIAL_HOUR }}
-      - name: Checkout
-        uses: actions/checkout@v3.3.0
-      - name: Success
-        id: success
-        run: |
-          gh api repos/${{ github.repository }}/statuses/${{ github.sha }} \
-            -f state=success \
-            -f description='Success description' \
-            -f context='Success'
-        env:
-          GH_TOKEN: ${{ github.token }}
-      - name: Failure
-        id: failure
-        run: |
-          gh api repos/${{ github.repository }}/statuses/${{ github.sha }} \
-            -f state=failure \
-            -f description='Failure description' \
-            -f context='Failure'
-        env:
-          GH_TOKEN: ${{ github.token }}
-      - name: Error
-        id: error
-        run: |
-          gh api repos/${{ github.repository }}/statuses/${{ github.sha }} \
-            -f state=error \
-            -f description='Error description' \
-            -f context='Error'
-        env:
-          GH_TOKEN: ${{ github.token }}
-
       - name: Create release
         uses: ./.github/actions/create-release
         with:
           github_token: ${{ github.token }}
-  foo2:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      statuses: write
-    steps:
-      - name: show env variables
-        run: |
-          echo ${{ env.SCHEDULE_INITIAL_HOUR }}
