@@ -26,18 +26,21 @@ jobs:
             const version = "${{ github.event.release.tag_name }}";
             const major = version.split(".")[0];
             const minor = version.split(".").slice(0, 2).join(".");
-            const tag = github.rest.git.getRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: major,
-            });
-            console.log(JSON.stringify(tag));
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/tags/' + major,
-              sha: context.sha
-            })
+            try {
+              github.rest.git.updateRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/' + major,
+                sha: context.sha
+              })
+            } catch {
+              github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/' + major,
+                sha: context.sha
+              })
+            }
       - name: Dump github context
         run:   echo "$GITHUB_CONTEXT"
         shell: bash
