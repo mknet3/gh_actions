@@ -14,6 +14,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.3.0
       - run: echo ${{ github.event.release.tag_name }}
+      - run: |
+          v1=$(echo '${{ github.event.release.tag_name }}' | cut -d '.' -f1)
+          v1_0=$(echo '${{ github.event.release.tag_name }}' | cut -d '.' -f1-2)
+          echo $v1
+          echo $v1_0
       - name: Dump github context
         run:   echo "$GITHUB_CONTEXT"
         shell: bash
