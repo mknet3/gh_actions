@@ -2,9 +2,8 @@ name: Check date
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [published]
 
 jobs:
 # check_date_allowed:
