@@ -2,6 +2,7 @@ name: Update major and minor tags
 
 on:
   release:
+    types: [released]
 
 jobs:
   update_tags:
@@ -12,6 +13,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3.3.0
+      - run: echo ${{ github.tag_name }}
       - name: Dump github context
         run:   echo "$GITHUB_CONTEXT"
         shell: bash
