@@ -26,6 +26,12 @@ jobs:
     steps:
       - name: ls
         run: ls -lR
+      - name: load yaml
+        run: |
+          YAML_FILE="cicd.yml"
+          while IFS=': ' read -r key value; do
+              echo "$(echo "$key" | tr '[:lower:]' '[:upper:]')=$value"
+          done < "$YAML_FILE"
       - name: Checkout
         uses: actions/checkout@v3.3.0
       - name: Success
