@@ -32,8 +32,11 @@ jobs:
         run: |
           YAML_FILE="cicd.yml"
           while IFS=': ' read -r key value; do
-              echo "$(echo "$key" | tr '[:lower:]' '[:upper:]')=$value"
+              echo "$(echo "$key" | tr '[:lower:]' '[:upper:]')=$value" >> $GITHUB_ENV
           done < "$YAML_FILE"
+      - name: show env variables
+        run: |
+          echo ${{ env.SCHEDULE_INITIAL_HOUR }}
       - name: Checkout
         uses: actions/checkout@v3.3.0
       - name: Success
