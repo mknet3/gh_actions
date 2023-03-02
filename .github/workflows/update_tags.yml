@@ -2,7 +2,7 @@ name: Update major and minor tags
 
 on:
   release:
-    types: [published, released]
+    types: [published, released, created]
 
 jobs:
   update_tags:
