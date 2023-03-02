@@ -27,14 +27,14 @@ jobs:
             const major = version.split(".")[0];
             const minor = version.split(".").slice(0, 2).join(".");
             try {
-              github.rest.git.updateRef({
+              await github.rest.git.updateRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 ref: 'refs/tags/' + major,
                 sha: context.sha
               })
             } catch {
-              github.rest.git.createRef({
+              await github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 ref: 'refs/tags/' + major,
