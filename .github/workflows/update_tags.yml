@@ -19,6 +19,20 @@ jobs:
           v1_0=$(echo '${{ github.event.release.tag_name }}' | cut -d '.' -f1-2)
           echo $v1
           echo $v1_0
+      - name: Publish tag
+        uses: actions/github-script@v5
+        with:
+          script: |
+            major=$(echo '${{ github.event.release.tag_name }}' | cut -d '.' -f1)
+            minor=$(echo '${{ github.event.release.tag_name }}' | cut -d '.' -f1-2)
+            echo $major
+            echo $minor
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/$major',
+              sha: context.sha
+            })
       - name: Dump github context
         run:   echo "$GITHUB_CONTEXT"
         shell: bash
