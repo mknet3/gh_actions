@@ -24,6 +24,8 @@ jobs:
       contents: write
       statuses: write
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3.3.0
       - name: ls
         run: ls -lR
       - name: load yaml
