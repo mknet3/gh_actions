@@ -2,8 +2,6 @@ name: Create release
 
 on:
   workflow_dispatch:
-  release:
-    types: [published]
 
 jobs:
   create_release:
@@ -12,6 +10,8 @@ jobs:
       contents: write
       statuses: write
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3.3.0
       - name: Create release
         uses: ./.github/actions/create-release
         with:
