@@ -31,7 +31,7 @@ jobs:
               repo: context.repo.repo,
               major,
             });
-            console.log(JSON.stringify(tag);
+            console.log(JSON.stringify(tag));
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
