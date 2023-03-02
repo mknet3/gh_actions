@@ -26,21 +26,17 @@ jobs:
             const version = "${{ github.event.release.tag_name }}";
             const major = version.split(".")[0];
             const minor = version.split(".").slice(0, 2).join(".");
-            try {
-              await github.rest.git.updateRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: 'refs/tags/' + major,
-                sha: context.sha
-              })
-            } catch {
-              await github.rest.git.createRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: 'refs/tags/' + major,
-                sha: context.sha
-              })
-            }
+            await github.rest.git.deleteRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/' + major,
+            });
+            await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/' + major,
+              sha: context.sha
+            })
       - name: Dump github context
         run:   echo "$GITHUB_CONTEXT"
         shell: bash
