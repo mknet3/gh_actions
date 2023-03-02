@@ -2,6 +2,9 @@ name: Check date
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - v*.*.*
 
 jobs:
 # check_date_allowed:
