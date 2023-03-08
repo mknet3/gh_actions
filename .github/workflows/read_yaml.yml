@@ -14,7 +14,7 @@ jobs:
         uses: jbutcher5/read-yaml@1.6
         with:
           file: '.github/cicd.yml'
-          key-path: '["app", "schedule"]'
+          key-path: '["."]'
 
       - name: Run read-yaml action
         id: info2
