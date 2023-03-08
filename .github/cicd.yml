@@ -1,3 +1,4 @@
 app:
   name: gh_actions
-  schedule_initial_hour: "07:00"
+schedule:
+  initial_hour: "07:00"
