@@ -18,4 +18,4 @@ jobs:
 
       - name: Display read-yaml output
         run: |
-          echo "${{ steps.info.outputs }}"
+          echo "${{ toJson(steps.info.outputs) }}"
