@@ -25,3 +25,5 @@ jobs:
           git rebase main
           git push origin release
       - run: gh workflow disable create_release.yml --repo mknet3/gh_actions
+        env:
+          GH_TOKEN: ${{ github.token }}
