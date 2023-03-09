@@ -16,6 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.3.0
       - run: |
+          git fetch origin release --depth 1
           git checkout release
           git merge main
           git push origin release
