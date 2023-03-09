@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GH_PAT }}
 
-      - run: gh workflow disable create_release.yml --repo mknet3/gh_actions
+      - run: gh workflow disable create_release.yml --repo mknet3/gh_actions || true
         env:
           GH_TOKEN: ${{ github.token }}
 
