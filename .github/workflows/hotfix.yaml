@@ -3,7 +3,7 @@ name: Hotfix
 on:
   push:
     branches:
-      - release
+      - main
   workflow_dispatch:
 
 jobs:
