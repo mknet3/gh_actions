@@ -38,10 +38,10 @@ jobs:
         with:
           script: |
             github.rest.actions.updateRepoVariable({
-              'mknet3',
-              'gh_actions',
-              'HOTFIX_IN_PROGRESS',
-              'true',
+              owner: 'mknet3',
+              repo: 'gh_actions',
+              name: 'HOTFIX_IN_PROGRESS',
+              value: 'true',
             });
 
       - run: |
