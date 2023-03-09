@@ -21,7 +21,7 @@ jobs:
           git pull origin main
           git fetch origin release
           git checkout release
-          git merge --allow-unrelated-histories main
+          git rebase main
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
