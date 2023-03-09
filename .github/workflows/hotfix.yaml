@@ -16,5 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.3.0
       - run: |
+          git pull
           git push origin HEAD:release
       - run: gh workflow disable create_release.yml --repo mknet3/gh_actions
