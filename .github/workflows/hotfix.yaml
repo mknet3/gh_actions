@@ -19,6 +19,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_PAT }}
+
       - run: |
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
