@@ -16,8 +16,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.3.0
       - run: |
-          git fetch origin release --depth 1
+          git pull origin main
           git checkout release
           git merge main
-          git push origin release
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
       - run: gh workflow disable create_release.yml --repo mknet3/gh_actions
