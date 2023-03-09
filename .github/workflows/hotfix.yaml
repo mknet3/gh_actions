@@ -27,6 +27,7 @@ jobs:
           git checkout release
           git rebase main
           git push origin release
+      - run: sleep 10s
       - run: gh workflow disable create_release.yml --repo mknet3/gh_actions
         env:
           GH_TOKEN: ${{ github.token }}
