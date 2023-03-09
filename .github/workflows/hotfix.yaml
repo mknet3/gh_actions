@@ -20,6 +20,10 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GH_PAT }}
 
+      - run: gh workflow disable create_release.yml --repo mknet3/gh_actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+
       - run: |
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
@@ -27,7 +31,10 @@ jobs:
           git checkout release
           git rebase main
           git push origin release
-      - run: sleep 10s
-      - run: gh workflow disable create_release.yml --repo mknet3/gh_actions
+
+      - run: |
+          gh workflow enable create_release.yml --repo mknet3/gh_actions
+          gh workflow run create_release.yml --repo mknet3/gh_actions
+          gh workflow disable create_release.yml --repo mknet3/gh_actions
         env:
           GH_TOKEN: ${{ github.token }}
