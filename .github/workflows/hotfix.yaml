@@ -36,6 +36,7 @@ jobs:
       - name: Update environment variable
         uses: actions/github-script@v4
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             github.rest.actions.updateRepoVariable({
               owner: 'mknet3',
