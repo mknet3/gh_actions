@@ -16,15 +16,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.3.0
       - run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
-          git pull origin main
-          git fetch origin release
-          git checkout release
-          git rebase main
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          git push origin HEAD:release
       - run: gh workflow disable create_release.yml --repo mknet3/gh_actions
