@@ -20,9 +20,9 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GH_PAT }}
 
-      - run: gh workflow disable create_release.yml --repo mknet3/gh_actions || true
-        env:
-          GH_TOKEN: ${{ github.token }}
+    #  - run: gh workflow disable create_release.yml --repo mknet3/gh_actions || true
+    #    env:
+    #      GH_TOKEN: ${{ github.token }}
 
       - run: |
           git config --global user.email "you@example.com"
@@ -32,22 +32,17 @@ jobs:
           git rebase main
           git push origin release
 
-
-      - name: Update environment variable
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.rest.actions.updateRepoVariable({
-              owner: 'mknet3',
-              repo: 'gh_actions',
-              name: 'HOTFIX_IN_PROGRESS',
-              value: 'true',
-            });
-
       - run: |
-          gh workflow enable create_release.yml --repo mknet3/gh_actions
-          gh workflow run create_release.yml --repo mknet3/gh_actions
-          gh workflow disable create_release.yml --repo mknet3/gh_actions
+          gh api --method PATCH -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/mknet3/gh_actions/actions/variables/HOTFIX_IN_PROGRESS \
+            -f name='HOTFIX_IN_PROGRESS' \
+           -f value='true' 
         env:
           GH_TOKEN: ${{ github.token }}
+
+    #  - run: |
+    #      gh workflow enable create_release.yml --repo mknet3/gh_actions
+    #      gh workflow run create_release.yml --repo mknet3/gh_actions
+    #      gh workflow disable create_release.yml --repo mknet3/gh_actions
+    #    env:
+    #      GH_TOKEN: ${{ github.token }}
