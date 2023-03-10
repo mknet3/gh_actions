@@ -35,7 +35,7 @@ jobs:
             -f name='HOTFIX_IN_PROGRESS' \
            -f value='true' 
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
 
     #  - run: |
     #      gh workflow enable create_release.yml --repo mknet3/gh_actions
