@@ -1,0 +1,15 @@
+name: Example issue ops
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    
+    if: github.event_name == 'issues' &&
+      (github.event.action == 'opened' || github.event.action == 'edited')
+
+    steps:
+      - name: Check out scripts
+        uses: actions/checkout@v3
