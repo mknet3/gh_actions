@@ -19,7 +19,7 @@ jobs:
           && sudo apt install gh -y
       - run: gh variable set LAST_SHA --body "${{ github.sha }}"
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_PAT_VAR }}
       - run: echo ${{ vars.LAST_SHA }}
   use_variable:
     needs: create_variable
