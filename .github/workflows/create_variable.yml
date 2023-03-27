@@ -1,0 +1,24 @@
+name: Create variable
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_variable:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.3.0
+      - run: gh variable set LAST_SHA --body "${{ github.sha }}"
+      - run: echo ${{ vars.LAST_SHA }}
+  use_variable:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.3.0
+      - run: echo ${{ vars.LAST_SHA }}
+  
