@@ -23,6 +23,13 @@ jobs:
           file: '.github/cicd.yml'
           key-path: '["app"]'
 
+      - name: Run read-yaml action
+        id: info3
+        uses: jbutcher5/read-yaml@1.6
+        with:
+          file: '.github/cicd.yml'
+          key-path: '["extra_params"]'
+
       - name: Display read-yaml output
         run: |
           echo "${{ toJson(steps.info.outputs) }}"
