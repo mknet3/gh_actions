@@ -1,4 +1,7 @@
 app:
   name: gh_actions
+extra_params:
+  param1:
+    param2: foo
 schedule:
   initial_hour: "07:00"
