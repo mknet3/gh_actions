@@ -28,3 +28,4 @@ jobs:
           echo "${{ toJson(steps.info.outputs) }}"
           echo "${{ steps.info.outputs.data }}"
           echo "${{ steps.info2.outputs.data.name }}"
+          echo "${{ steps.info3.outputs.data.extra_params.param1.param2 }}"
