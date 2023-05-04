@@ -14,7 +14,7 @@ jobs:
         uses: jbutcher5/read-yaml@1.6
         with:
           file: '.github/cicd.yml'
-          key-path: '["."]'
+          key-path: '["app"]'
 
       - name: Run read-yaml action
         id: info2
@@ -33,6 +33,8 @@ jobs:
       - name: Display read-yaml output
         run: |
           echo "${{ toJson(steps.info.outputs) }}"
+          echo "${{ toJson(steps.info2.outputs) }}"
+          echo "${{ toJson(steps.info3.outputs) }}"
           echo "${{ steps.info.outputs.data }}"
           echo "${{ steps.info2.outputs.data.name }}"
           echo "${{ steps.info3.outputs.data.extra_params.param1.param2 }}"
