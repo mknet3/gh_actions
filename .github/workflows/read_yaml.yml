@@ -1,6 +1,6 @@
 on: [ push, pull_request ]
 env:
-  is_hotfix: ${{ !contains(github.event.head_commit.message, '[hotfix]') }}
+  is_hotfix: ${{ contains(github.event.head_commit.message, '[hotfix]') }}
 jobs:
   test-yaml-reader:
     runs-on: ubuntu-latest
