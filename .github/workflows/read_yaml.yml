@@ -1,5 +1,6 @@
 on: [ push, pull_request ]
-
+env:
+  is_hotfix: ${{ !contains(github.event.head_commit.message, '[hotfix]') }}
 jobs:
   test-yaml-reader:
     runs-on: ubuntu-latest
@@ -8,7 +9,8 @@ jobs:
       output1: ${{ steps.info.outputs.data }}
     steps:
       - uses: actions/checkout@v1
-
+      - run: echo ${{ env.is_hotfix }}
+      
       - name: Run read-yaml action
         id: info
         uses: jbutcher5/read-yaml@1.6
