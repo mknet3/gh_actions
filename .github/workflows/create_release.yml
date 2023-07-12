@@ -19,3 +19,5 @@ jobs:
         with:
           github_token: ${{ github.token }}
       - run: gh workflow disable 'Create variable'
+        env:
+          GH_TOKEN: ${{ github.token }}
