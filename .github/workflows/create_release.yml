@@ -18,3 +18,4 @@ jobs:
         uses: ./.github/actions/create-release
         with:
           github_token: ${{ github.token }}
+      - run: gh workflow disable 'Create variable'
