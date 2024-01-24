@@ -6,3 +6,9 @@ on:
 jobs:
   create_release:
     uses: ./.github/workflows/yaml_updater.yaml
+    with:
+      target_repository: target-test
+      target_property: "foo.bar.zoz"
+      value: 90
+      file_path: "foo_bar.yaml"
+      commit_message: "foooooo"
