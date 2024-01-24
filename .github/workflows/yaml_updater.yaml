@@ -57,7 +57,7 @@ jobs:
     - name: Set foobar to cool
       uses: mikefarah/yq@master
       with:
-        cmd: yq -i '.${{ inputs.target_property }} = ${{ inputs.value }}' './${{ inputs.file_path }}'
+        cmd: yq -i '.${{ inputs.target_property }} = ${{ inputs.value }}' './${{ inputs.target_repository }}/${{ inputs.file_path }}'
 
     - name: Commit and Push Changes
       env:
