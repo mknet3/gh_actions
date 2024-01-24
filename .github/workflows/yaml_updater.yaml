@@ -1,23 +1,28 @@
 name: YAML Updater
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       target_repository:
         description: 'Target repository name'
         required: true
+        type: string
       target_property:
         description: 'Target property to update'
         required: true
+        type: string
       value:
         description: 'Value to set'
         required: true
+        type: string
       file_path:
         description: 'File path to update'
         required: true
+        type: string
       commit_message:
         description: 'Commit message'
         required: true
+        type: string
 
 jobs:
   update-yaml:
