@@ -1,4 +1,4 @@
-name: Create release
+name: Use yaml updater
 
 on:
   workflow_dispatch:
