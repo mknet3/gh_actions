@@ -54,9 +54,10 @@ jobs:
         gh repo clone ${{ github.repository_owner }}/${{ inputs.target_repository }}
         cd ${{ inputs.target_repository }}
 
-    - name: Update YAML File
-      run: |
-        yq e '.${{ inputs.target_property }} = "${{ inputs.value }}"' -i ./${{ inputs.file_path }}
+    - name: Set foobar to cool
+      uses: mikefarah/yq@master
+      with:
+        cmd: yq -i '.${{ inputs.target_property }} = ${{ inputs.value }}' './${{ inputs.file_path }}'
 
     - name: Commit and Push Changes
       env:
