@@ -10,6 +10,6 @@ jobs:
     with:
       target_repository: target-test
       target_property: "foo.bar.zoz"
-      value: 120
+      value: 130
       file_path: "foo_bar.yaml"
       commit_message: "foooooo"
