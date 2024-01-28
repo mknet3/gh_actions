@@ -44,5 +44,4 @@ jobs:
         target_property: ${{ inputs.target_property }}
         value: ${{ inputs.value }}
         file_path: ${{ inputs.file_path }}
-        commit_message: ${{ inputs.commit_message }}
         gh_token: ${{ steps.generate_token.outputs.token }}
