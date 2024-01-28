@@ -29,17 +29,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Source Repository
-      uses: actions/checkout@v2
-
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-
-    - name: Install yq
-      run: pip install yq
-
     - name: Generate a token
       id: generate_token
       uses: actions/create-github-app-token@v1
@@ -48,25 +37,12 @@ jobs:
         private-key: ${{ secrets.APP_PRIVATE_KEY }}
         owner: ${{ github.repository_owner }}
 
-    - name: Clone Target Repository
-      env:
-        GH_TOKEN: ${{ steps.generate_token.outputs.token }}
-      run: |
-        gh repo clone ${{ github.repository_owner }}/${{ inputs.target_repository }}
-        cd ${{ inputs.target_repository }}
-
-    - name: Set foobar to cool
-      uses: mikefarah/yq@master
+    - name: GitOps release
+      uses: mknet3/gitops-yaml-release@main
       with:
-        cmd: yq -i '.${{ inputs.target_property }} = ${{ inputs.value }}' './${{ inputs.target_repository }}/${{ inputs.file_path }}'
-
-    - name: Commit and Push Changes
-      env:
-        GH_TOKEN: ${{ steps.generate_token.outputs.token }}
-      run: |
-        cd ./${{ inputs.target_repository }}
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-        git add ./${{ inputs.file_path }}
-        git commit -m "${{ inputs.commit_message }}"
-        git push https://x-access-token:$GH_TOKEN@github.com/${{ github.repository_owner }}/${{ inputs.target_repository }}.git HEAD:main
+        target_repository: ${{ inputs.target_repository }}
+        target_property: ${{ inputs.target_property }}
+        value: ${{ inputs.value }}
+        file_path: ${{ inputs.file_path }}
+        commit_message: ${{ inputs.commit_message }}
+        gh_token: ${{ steps.generate_token.outputs.token }}
