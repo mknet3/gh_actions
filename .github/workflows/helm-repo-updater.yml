@@ -1,0 +1,11 @@
+name: Helm repo updater
+on:
+  push:
+    branches: [ main ]
+jobs:
+  container-test-job:
+    runs-on: ubuntu-latest
+    container:
+      image: docplanner/helm-repo-updater
+    steps:
+      - run: helm-repo-updater
