@@ -5,3 +5,5 @@ extra_params:
     param2: foo
 schedule:
   initial_hour: "07:00"
+foo:
+  bar: [ "name": "foo" ]
