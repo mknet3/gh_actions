@@ -1,21 +1,19 @@
 name: Create release
 
 on:
-  push:
-    branches: [release]
   workflow_dispatch:
+    inputs:
+      destination_buckets:
+        type: string
+        required: true
 
 jobs:
   create_release:
+    strategy: 
+        matrix:
+            bucket: ${{ fromJSON(inputs.destination_buckets) }}
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
       - name: Checkout
         uses: actions/checkout@v3.3.0
-      - name: Create release
-        uses: ./.github/actions/create-release
-        with:
-          github_token: ${{ github.token }}
-      - run: gh workflow disable 'Create variable'
-        env:
-          GH_TOKEN: ${{ github.token }}
