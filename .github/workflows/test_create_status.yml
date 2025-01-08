@@ -1,0 +1,50 @@
+name: Manual Create Status
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: "The commit SHA on which to create the status"
+        required: true
+      status_context:
+        description: "The name (context) of the new status"
+        required: true
+      state:
+        description: "The status state: success, failure, pending, or error"
+        required: false
+        default: "success"
+      description:
+        description: "A short message to accompany the status"
+        required: false
+        default: "Created by manual workflow"
+      target_url:
+        description: "URL to link from the status"
+        required: false
+        default: ""
+
+permissions:
+  statuses: write
+
+jobs:
+  create-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create a new status
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { commit_sha, status_context, state, description, target_url } = context.payload.inputs;
+            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+
+            console.log(`Creating status on commit: ${commit_sha}`);
+            console.log(`Context: ${status_context}, State: ${state}`);
+
+            // Call the GitHub Statuses API to create a new status
+            await github.request(`POST /repos/${owner}/${repo}/statuses/${commit_sha}`, {
+              state,
+              context: status_context,
+              description,
+              target_url
+            });
+
+            console.log(`Status "${status_context}" created on commit ${commit_sha}!`);
