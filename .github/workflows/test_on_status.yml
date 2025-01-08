@@ -1,0 +1,45 @@
+name: Normalize CircleCI Status
+
+on:
+  status:
+    types: [created, updated]
+
+permissions:
+  statuses: write
+
+jobs:
+  duplicate-circleci-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Duplicate status with normalized context
+        uses: actions/github-script@v6
+        with:
+          script: |
+            // The status event payload includes the commit status details:
+            // https://docs.github.com/en/webhooks-and-events/events/github-event-types#statusevent
+            const payload = context.payload;
+
+            // Example fields:
+            // payload.context        => e.g. "ci/circleci: build"
+            // payload.state          => e.g. "success", "failure"
+            // payload.description    => e.g. "The build succeeded!"
+            // payload.target_url     => e.g. "https://circleci.com/workflow-id..."
+            // payload.sha            => commit SHA
+            // payload.repository     => repo info
+
+            if (payload.context && payload.context.startsWith("ci/circleci:")) {
+              // Build a new context by replacing the colon with an underscore
+              const newContext = payload.context.replace("ci/circleci: ", "ci/circleci_");
+
+              console.log(`Creating a new status with context: ${newContext}`);
+
+              // Post a new status with the updated context
+              await github.request(`POST /repos/${context.repo.owner}/${context.repo.repo}/statuses/${payload.sha}`, {
+                state: payload.state,
+                context: newContext,
+                description: payload.description,
+                target_url: payload.target_url
+              });
+            } else {
+              console.log(`Status context "${payload.context}" does not match "ci/circleci:". Skipping.`);
+            }
