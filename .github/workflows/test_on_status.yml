@@ -1,7 +1,7 @@
 name: Normalize CircleCI Status
 
 on:
-  status
+  - status
 
 jobs:
   duplicate-circleci-status:
