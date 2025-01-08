@@ -1,8 +1,7 @@
 name: Normalize CircleCI Status
 
 on:
-  status:
-    types: [created, updated]
+  status
 
 permissions:
   statuses: write
