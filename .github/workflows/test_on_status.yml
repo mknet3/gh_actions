@@ -1,9 +1,7 @@
 name: Normalize CircleCI Status
 
-on: status
-
-permissions:
-  statuses: write
+on:
+  status
 
 jobs:
   duplicate-circleci-status:
